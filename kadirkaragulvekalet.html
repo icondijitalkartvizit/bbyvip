@@ -12,57 +12,51 @@
         button { background-color: #007bff; color: white; border: none; padding: 12px 25px; border-radius: 6px; cursor: pointer; font-size: 16px; width: 90%; margin-top: 10px; }
         button:hover { background-color: #0056b3; }
         .hidden-content { display: none; }
-        .info-box { background-color: #e9ecef; padding: 12px; border-radius: 8px; font-size: 15px; font-weight: bold; color: #495057; margin-top: 5px; word-break: break-all; text-align: left; }
+        .info-box { background-color: #e9ecef; padding: 15px; border-radius: 8px; font-size: 15px; font-weight: bold; color: #495057; margin-top: 10px; word-break: break-all; text-align: left; white-space: pre-line; line-height: 1.6; }
         .error { color: #dc3545; margin-top: 10px; font-size: 14px; font-weight: bold; }
-        .copy-btn { background-color: #28a745; width: auto; padding: 6px 15px; font-size: 14px; margin-top: 5px; float: right; color: white; border: none; border-radius: 6px; cursor: pointer; }
+        .copy-btn { background-color: #28a745; width: 100%; padding: 12px; font-size: 16px; margin-top: 15px; color: white; border: none; border-radius: 6px; cursor: pointer; }
         .copy-btn:hover { background-color: #218838; }
         .label { font-size: 13px; color: #666; margin-top: 15px; display: block; text-align: left; font-weight: bold;}
-        .row { overflow: hidden; margin-bottom: 10px; }
     </style>
 </head>
 <body>
 
 <script>
     // ============================================================
-    // 👇 SADECE AŞAĞIDAKİ 4 SATIRI KENDİNE GÖRE DEĞİŞTİR 👇
+    // 👇 SADECE AŞAĞIDAKİ İKİ ALANI KENDİNE GÖRE DEĞİŞTİR 👇
     // ============================================================
-    const GERCEK_SIFRE   = "253425"; 
-    const AVUKAT_ADI     = "Av. KADİR KARAGÜL"; 
-    const BARO_ADI       = "İstanbul 1.Bolu Barosu"; 
-    const BARO_SICIL_NO  = "96037"; 
+    
+    const GERCEK_SIFRE = "253425"; // Sayfa giriş şifresi
+    
+    // Alttaki tırnakların arasına vekaletname metnini istediğin gibi satır satır yapıştır:
+    const VEKALETNAME_METNI = `AV. KADİR KARAGÜL
+T.C 22186822382
+İstanbul 1. Bolu Barosu 
+Sicil; 96037
+Adres: Cevizli Mahallesi Enderun sokak No: 1  Kartal/İstanbul`;
+
     // ============================================================
 </script>
 
 <div class="container">
+    <!-- Giriş Ekranı -->
     <div id="login-form">
         <h2>Güvenli Erişim</h2>
-        <p style="color: #666; font-size: 14px;">Avukat vekaletname bilgilerini görüntülemek için şifreyi giriniz.</p>
+        <p style="color: #666; font-size: 14px;">Vekaletname bilgilerini görüntülemek için şifreyi giriniz.</p>
         <input type="password" id="password" placeholder="Şifre">
         <br>
         <button onclick="verifyPassword()">Giriş Yap</button>
         <p id="error-msg" class="error"></p>
     </div>
 
+    <!-- Şifre Doğruysa Açılacak Panel -->
     <div id="secure-content" class="hidden-content">
         <h2>Vekaletname Bilgileri</h2>
         
-        <div class="row">
-            <span class="label">Avukat Adı Soyadı:</span>
-            <div class="info-box" id="avukat-text"></div>
-            <button class="copy-btn" onclick="copyText('avukat-text')">Kopyala</button>
-        </div>
-
-        <div class="row">
-            <span class="label">Bağlı Olduğu Baro:</span>
-            <div class="info-box" id="baro-text"></div>
-            <button class="copy-btn" onclick="copyText('baro-text')">Kopyala</button>
-        </div>
+        <span class="label">Kutunun İçindeki Bilgiler:</span>
+        <div class="info-box" id="vekalet-text"></div>
         
-        <div class="row">
-            <span class="label">Baro Sicil Numarası:</span>
-            <div class="info-box" id="barosicil-text"></div>
-            <button class="copy-btn" onclick="copyText('barosicil-text')">Kopyala</button>
-        </div>
+        <button class="copy-btn" onclick="copyText()">Tüm Bilgileri Kopyala</button>
     </div>
 </div>
 
@@ -70,9 +64,7 @@
     function verifyPassword() {
         const input = document.getElementById('password').value;
         if (input === GERCEK_SIFRE) {
-            document.getElementById('avukat-text').innerText = AVUKAT_ADI;
-            document.getElementById('baro-text').innerText = BARO_ADI;
-            document.getElementById('barosicil-text').innerText = BARO_SICIL_NO;
+            document.getElementById('vekalet-text').innerText = VEKALETNAME_METNI;
             document.getElementById('login-form').style.display = 'none';
             document.getElementById('secure-content').style.display = 'block';
         } else {
@@ -80,8 +72,8 @@
         }
     }
 
-    function copyText(elementId) {
-        const text = document.getElementById(elementId).innerText;
+    function copyText() {
+        const text = document.getElementById('vekalet-text').innerText;
         if (navigator.clipboard && window.isSecureContext) {
             navigator.clipboard.writeText(text).then(() => { alert("Kopyalandı!"); }).catch(() => { fallbackCopy(text); });
         } else {
