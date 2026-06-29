@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hesap Bilgileri</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+        h2 { color: #333; margin-bottom: 20px; }
+        .info-box {
+            background-color: #e9ecef;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #495057;
+            margin-top: 10px;
+            word-break: break-all;
+        }
+        .copy-btn { 
+            background-color: #28a745; 
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.2s;
+            width: 90%;
+            margin-top: 15px;
+        }
+        .copy-btn:hover { background-color: #218838; }
+        .label { font-size: 14px; color: #666; margin-top: 15px; display: block; text-align: left; font-weight: bold;}
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Hesap Bilgileri</h2>
+    
+    <span class="label">Alıcı Adı:</span>
+    <div class="info-box" id="recipient-text">Kadir Karagül</div> <span class="label">IBAN:</span>
+    <div class="info-box" id="iban-text">TR96 0001 5001 5800 7346 2306 49</div> <button class="copy-btn" onclick="copyText()">IBAN Kopyala</button>
+</div>
+
+<script>
+    function copyText() {
+        const text = document.getElementById('iban-text').innerText;
+        
+        // Hem iPhone hem Android hem de PC'de sorunsuz çalışan kopyalama sistemi
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert("IBAN başarıyla kopyalandı!");
+            }).catch(() => {
+                fallbackCopy(text);
+            });
+        } else {
+            fallbackCopy(text);
+        }
+    }
+
+    function fallbackCopy(text) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed"; 
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            alert("IBAN başarıyla kopyalandı!");
+        } catch (err) {
+            alert("Kopyalanamadı, lütfen ekrandan seçerek kopyalayın.");
+        }
+        document.body.removeChild(textArea);
+    }
+</script>
+
+</body>
+</html>
