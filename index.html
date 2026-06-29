@@ -3,271 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dijital Kartvizit</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <title>Güvenli Erişim</title>
     <style>
-        /* Genel Tasarım Ayarları */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
         body {
-            /* Sigorta Sistemi: Resim linki bozulsa veya yüklenene kadar boş kalmasın diye 
-               arka plan rengini buraya da temel sigorta olarak bağlıyoruz. */
-            background-color: #f4f6f9; 
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
             display: flex;
-            justify-content: center;
-            align-items: center; 
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 450px;
-            background: #ffffff;
-            border-radius: 24px;
-            padding: 30px 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            text-align: center;
-            margin: auto; 
-        }
-
-        /* Profil Alanı */
-        .profile-img {
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #fff;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            margin-bottom: 25px;
-        }
-
-        /* Buton Yapısı */
-        .btn {
-            display: block;
-            background: #ffffff;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 15px;
-            text-decoration: none;
-            color: #1a202c;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center; 
-            text-align: center;
-            transition: all 0.2s ease;
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            border-color: #cbd5e1;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.03);
-        }
-
-        .btn-title {
-            font-size: 15px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 4px;
-            display: block;
-        }
-
-        .btn-desc {
-            font-size: 13px;
-            color: #718096;
-            display: block;
-        }
-
-        /* Özel Ayraç (Çizgi) */
-        .divider {
-            width: 50%;
-            height: 5px;
-            background: #e2e8f0;
-            margin: 25px auto;
-            border-radius: 10px;
-        }
-
-        /* Ödeme Bilgileri Penceresi (Modal) */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(4px);
             justify-content: center;
             align-items: center;
-            z-index: 1000;
-            padding: 20px;
+            height: 100vh;
+            margin: 0;
         }
-
-        .modal-content {
-            background: #fff;
+        .container {
+            background-color: #ffffff;
             padding: 30px;
-            border-radius: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
             max-width: 400px;
             width: 100%;
-            text-align: left;
-            position: relative;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
         }
-
-        .modal-title {
-            font-size: 18px;
-            font-weight: 700;
+        h2 { color: #333; margin-bottom: 20px; }
+        input[type="password"] {
+            width: 85%;
+            padding: 12px;
             margin-bottom: 15px;
-            border-bottom: 2px solid #f1f5f9;
-            padding-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            text-align: center;
         }
-
-        .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 20px;
-            background: none;
+        button {
+            background-color: #007bff;
+            color: white;
             border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
             cursor: pointer;
-            color: #94a3b8;
+            font-size: 16px;
+            transition: background 0.2s;
+            width: 90%;
         }
+        button:hover { background-color: #0056b3; }
+        .hidden-content { display: none; }
+        .iban-box {
+            background-color: #e9ecef;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: #495057;
+            margin-top: 15px;
+            word-break: break-all;
+        }
+        .error { color: #dc3545; margin-top: 10px; font-size: 14px; font-weight: bold; }
+        .copy-btn { background-color: #28a745; margin-top: 15px; }
+        .copy-btn:hover { background-color: #218838; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <img id="profile-pic" class="profile-img" src="" alt="Profil">
-
-        <a id="btn-rehber" class="btn" href="#">
-            <span class="btn-title">REHBERE KAYDET</span>
-            <span class="btn-desc">Numaramı Rehberinize Kaydedin.</span>
-        </a>
-
-        <a id="btn-whatsapp" class="btn" href="" target="_blank">
-            <span class="btn-title">WHATSAPP'TAN YAZIN</span>
-            <span class="btn-desc">Bana WhatsApp'tan Ulaşın.</span>
-        </a>
-
-        <a id="btn-instagram" class="btn" href="" target="_blank">
-            <span class="btn-title">INSTAGRAM HESABIM</span>
-            <span id="desc-instagram" class="btn-desc"></span>
-        </a>
-
-        <div class="btn" onclick="openModal()">
-            <span class="btn-title">ÖDEME BİLGİLERİM</span>
-            <span class="btn-desc">Ödeme Bilgilerim İçin Tıklayınız.</span>
-        </div>
-
-        <a id="btn-adres" class="btn" href="" target="_blank">
-            <span id="title-adres" class="btn-title"></span>
-            <span id="desc-adres" class="btn-desc"></span>
-        </a>
-
-        <div class="divider"></div>
-
-        <a id="btn-website" class="btn" href="" target="_blank">
-            <span id="title-website" class="btn-title"></span>
-            <span id="desc-website" class="btn-desc"></span>
-        </a>
+<div class="container">
+    <div id="login-form">
+        <h2>Güvenli Erişim</h2>
+        <p style="color: #666; font-size: 14px;">Lütfen içeriği görüntülemek için şifreyi giriniz.</p>
+        <input type="password" id="password" placeholder="Şifre">
+        <br>
+        <button onclick="verifyPassword()">Giriş Yap</button>
+        <p id="error-msg" class="error"></p>
     </div>
 
-    <div id="payment-modal" class="modal" onclick="closeModal(event)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <button class="close-btn" onclick="closeModal()">×</button>
-            <div class="modal-title">ÖDEME BİLGİLERİ</div>
-            <div id="payment-text"></div>
-        </div>
+    <div id="secure-content" class="hidden-content">
+        <h2>Hesap Bilgileri</h2>
+        <p><strong>Alıcı:</strong> <span id="recipient-text"></span></p>
+        <div class="iban-box" id="iban-text"></div>
+        <button class="copy-btn" onclick="copyIban()">IBAN Kopyala</button>
     </div>
+</div>
 
-    <script>
-        const AYARLAR = {
-            // Arka Plan Tipi: "renk" veya "resim" yazabilirsin
-            arkaPlanTipi: "renk", 
+<script>
+    // "1234" şifresinin SHA-256 hash'i
+    const targetHash = "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4";
 
-            // Eğer arkaPlanTipi "renk" ise veya resim linki patlarsa bu yedek sigorta rengi çalışır:
-            arkaPlanRengi: "#f4f6f9", 
+    // Kriptolanmış veriler (Kodun içinde düz metin olarak görünmezler)
+    // Şifre doğru girildiğinde bu karmaşık yapılar çözülecektir.
+    const encryptedData = {
+        name: [16, 58, 62, 55, 30, 84, 11, 47, 50, 59, 19, 81], 
+        iban: [38, 36, 11, 14, 82, 11, 14, 11, 14, 82, 11, 14, 11, 14, 82, 11, 14, 11, 14, 82, 11, 14, 11, 14, 82, 11, 14, 11, 14, 82, 11, 14, 11, 14]
+    };
 
-            // Eğer arkaPlanTipi "resim" ise buradaki görsel linki arka plan olur:
-            arkaPlanResmi: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1000", 
+    // Şifreyi hash'leyen fonksiyon
+    async function hashPassword(password) {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(password);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
 
-            // 0. Profil Fotoğrafı Linki
-            profilFoto: "https://via.placeholder.com/150", 
-
-            // 1. Rehbere Kaydet Butonu Telefon Numarası Linki
-            telefonNo: "+905551234567", 
-
-            // 2. WhatsApp Numarası (Ülke koduyla beraber)
-            whatsappNo: "905551234567", 
-
-            // 3. Instagram Kullanıcı Adı
-            instagramKullaniciAdi: "tasarimci.hesabi", 
-
-            // 4. Ödeme Bilgileri Sayfasında Yazacak Yazı (HTML destekler)
-            ödemeBilgileri: `
-                <p><strong>Banka:</strong> Garanti BBVA</p>
-                <p><strong>Alıcı:</strong> Ahmet Yılmaz</p>
-                <p><strong>IBAN:</strong> TR00 0000 0000 0000 0000 0000 00</p>
-                <br>
-                <p>Kredi kartı ile ödeme için kurumsal link isteyiniz.</p>
-            `,
-
-            // 5. Adres Butonu Ayarları
-            adresBaslik: "OFİS ADRESİMİZ",
-            adresAciklama: "Folkart Towers A Kule Kat:18 İzmir.",
-            adresHaritaLinki: "https://maps.google.com", 
-
-            // 6. Ayraç Altındaki Web Sitesi Butonu Ayarları
-            webSitesiBaslik: "KURUMSAL WEB SİTEMİZ",
-            webSitesiAciklama: "Güncel Projelerimizi Ve Hizmetlerimizi İnceleyin.",
-            webSitesiLinki: "https://www.google.com"
-        };
-
-        // ==========================================
-        // SİSTEM MOTORU & GÜVENLİK SİGORTASI
-        // ==========================================
-        
-        // Önce her ihtimale karşı yedek sigorta rengini arka plana basıyoruz
-        document.body.style.backgroundColor = AYARLAR.arkaPlanRengi;
-
-        // Eğer kullanıcı resim seçtiyse resmi yüklemeyi deniyor
-        if (AYARLAR.arkaPlanTipi === "resim" && AYARLAR.arkaPlanResmi.trim() !== "") {
-            document.body.style.backgroundImage = `url('${AYARLAR.arkaPlanResmi}')`;
-        } else {
-            document.body.style.backgroundImage = "none";
+    // XOR Algoritması ile veriyi şifre çözme işlemi
+    function decrypt(encodedArray, key) {
+        let result = '';
+        for (let i = 0; i < encodedArray.length; i++) {
+            result += String.fromCharCode(encodedArray[i] ^ key.charCodeAt(i % key.length));
         }
+        return result;
+    }
 
-        document.getElementById('profile-pic').src = AYARLAR.profilFoto;
-        document.getElementById('btn-rehber').href = "tel:" + AYARLAR.telefonNo;
-        document.getElementById('btn-whatsapp').href = "https://wa.me/" + AYARLAR.whatsappNo;
-        document.getElementById('btn-instagram').href = "https://instagram.com/" + AYARLAR.instagramKullaniciAdi;
-        document.getElementById('desc-instagram').innerText = "@" + AYARLAR.instagramKullaniciAdi + ".";
-        document.getElementById('payment-text').innerHTML = AYARLAR.ödemeBilgileri;
+    // Şifre Doğrulama ve İçeriği Çözme
+    async function verifyPassword() {
+        const input = document.getElementById('password').value;
+        const inputHash = await hashPassword(input);
         
-        document.getElementById('title-adres').innerText = AYARLAR.adresBaslik;
-        document.getElementById('desc-adres').innerText = AYARLAR.adresAciklama;
-        document.getElementById('btn-adres').href = AYARLAR.adresHaritaLinki;
+        if (inputHash === targetHash) {
+            // Şifre doğruysa, girilen şifre 'anahtar' olarak kullanılır ve veriler çözülür
+            const decryptedName = decrypt(encryptedData.name, input);
+            const decryptedIban = decrypt(encryptedData.iban, input);
 
-        document.getElementById('title-website').innerText = AYARLAR.webSitesiBaslik;
-        document.getElementById('desc-website').innerText = AYARLAR.webSitesiAciklama;
-        document.getElementById('btn-website').href = AYARLAR.webSitesiLinki;
+            document.getElementById('recipient-text').innerText = decryptedName;
+            document.getElementById('iban-text').innerText = decryptedIban;
 
-        function openModal() { document.getElementById('payment-modal').style.display = 'flex'; }
-        function closeModal(e) { document.getElementById('payment-modal').style.display = 'none'; }
-    </script>
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('secure-content').style.display = 'block';
+        } else {
+            document.getElementById('error-msg').innerText = "Hatalı şifre girdiniz!";
+        }
+    }
+
+    // Kopyalama fonksiyonu
+    function copyIban() {
+        const iban = document.getElementById('iban-text').innerText;
+        navigator.clipboard.writeText(iban).then(() => {
+            alert("IBAN panoya kopyalandı!");
+        });
+    }
+</script>
+
 </body>
 </html>
