@@ -7,47 +7,41 @@
     <style>
             body {
     display: flex;
-    justify-content: center; /* Yatayda yine tam ortada kalsın */
-    align-items: flex-start; /* Dikey ortalamayı iptal edip en yukarı sabitleyin */
-    
-    padding-top: 15vh;       /* Tüm içeriği ekranın üstünden %15 aşağı kaydırır */
-    
+    justify-content: center;
+    align-items: center; /* Sayfayı dikeyde tam ortalayan satır */
     background-color: #f4f7f6;
-    min-height: 100vh;       /* height yerine min-height kullanmak daha esnektir */
-    box-sizing: border-box;  /* Eklenen boşluğun taşma yapmasını engeller */
+    height: 100vh;
+    margin: 0; /* Tarayıcının varsayılan boşluklarını sıfırlamak için */
 }
 
-        }
-        .container {
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
-        }
-        h2 { color: #333; margin-bottom: 20px; }
-        input[type="password"] {
-            width: 85%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 16px;
-            text-align: center;
-        }
-        button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background 0.2s;
-            width: 90%;
-            margin-top: 10px;
+.container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+input[type="password"] {
+    width: 85%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    text-align: center;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
         }
         button:hover { background-color: #0056b3; }
         .hidden-content { display: none; }
