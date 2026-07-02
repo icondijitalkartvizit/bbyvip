@@ -64,7 +64,7 @@
     function copyText() {
         const text = document.getElementById('iban-text').innerText;
         
-        // Hem iPhone hem Android hem de PC'de sorunsuz çalışan kopyalama sistemi
+        // Hem iPhone hem Android hem de PC'de 1sorunsuz çalışan kopyalama sistemi
         if (navigator.clipboard && window.isSecureContext) {
             navigator.clipboard.writeText(text).then(() => {
                 alert("IBAN başarıyla kopyalandı!");
